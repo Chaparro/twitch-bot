@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import win32com.client as wincl
 speak = wincl.Dispatch("SAPI.SpVoice")
@@ -15,7 +16,10 @@ def pp(message, mtype='INFO'):
 	print '[%s] [%s] %s' % (time.strftime('%H:%M:%S', time.gmtime()), mtype, message)
 
 def ppi(channel, message, username):
-	print '[%s %s] <%s> %s' % (time.strftime('%H:%M:%S', time.gmtime()), channel, username.lower(), message)
+	try:
+		print '[%s %s] <%s> %s' % (time.strftime('%H:%M:%S', time.gmtime()), channel, username.lower(), message)
+	except:
+		print "printing error"
 
 def say(username,message):
 	speak.Speak('%s dice: %s' %(username,message))
