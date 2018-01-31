@@ -2,11 +2,11 @@
 Simple IRC Bot for Twitch.tv
 
 Developed by Aidan Thomson <aidraj0@gmail.com>
+Fork by Ricardo Chaparro <https://github.com/Chaparro>
 """
 
 import lib.irc as irc_
 from lib.functions_general import *
-import lib.functions_commands as commands
 
 class Roboraj:
 
@@ -41,53 +41,58 @@ class Roboraj:
 				message = message_dict['message']
 				username = message_dict['username']
 
+				if 'ssbm_dream' in username:
+					username = 'drim'
+
 				ppi(channel, message, username)
+				say(username,message)
+
 
 				# check if message is a command with no arguments
-				if commands.is_valid_command(message) or commands.is_valid_command(message.split(' ')[0]):
-					command = message
+				# if commands.is_valid_command(message) or commands.is_valid_command(message.split(' ')[0]):
+				# 	command = message
 
-					if commands.check_returns_function(command.split(' ')[0]):
-						if commands.check_has_correct_args(command, command.split(' ')[0]):
-							args = command.split(' ')
-							del args[0]
+				# 	if commands.check_returns_function(command.split(' ')[0]):
+				# 		if commands.check_has_correct_args(command, command.split(' ')[0]):
+				# 			args = command.split(' ')
+				# 			del args[0]
 
-							command = command.split(' ')[0]
+				# 			command = command.split(' ')[0]
 
-							if commands.is_on_cooldown(command, channel):
-								pbot('Command is on cooldown. (%s) (%s) (%ss remaining)' % (
-									command, username, commands.get_cooldown_remaining(command, channel)), 
-									channel
-								)
-							else:
-								pbot('Command is valid an not on cooldown. (%s) (%s)' % (
-									command, username), 
-									channel
-								)
+				# 			if commands.is_on_cooldown(command, channel):
+				# 				pbot('Command is on cooldown. (%s) (%s) (%ss remaining)' % (
+				# 					command, username, commands.get_cooldown_remaining(command, channel)), 
+				# 					channel
+				# 				)
+				# 			else:
+				# 				pbot('Command is valid an not on cooldown. (%s) (%s)' % (
+				# 					command, username), 
+				# 					channel
+				# 				)
 								
-								result = commands.pass_to_function(command, args)
-								commands.update_last_used(command, channel)
+				# 				result = commands.pass_to_function(command, args)
+				# 				commands.update_last_used(command, channel)
 
-								if result:
-									resp = '(%s) > %s' % (username, result)
-									pbot(resp, channel)
-									irc.send_message(channel, resp)
+				# 				if result:
+				# 					resp = '(%s) > %s' % (username, result)
+				# 					pbot(resp, channel)
+				# 					irc.send_message(channel, resp)
 
-					else:
-						if commands.is_on_cooldown(command, channel):
-							pbot('Command is on cooldown. (%s) (%s) (%ss remaining)' % (
-									command, username, commands.get_cooldown_remaining(command, channel)), 
-									channel
-							)
-						elif commands.check_has_return(command):
-							pbot('Command is valid and not on cooldown. (%s) (%s)' % (
-								command, username), 
-								channel
-							)
-							commands.update_last_used(command, channel)
+				# 	else:
+				# 		if commands.is_on_cooldown(command, channel):
+				# 			pbot('Command is on cooldown. (%s) (%s) (%ss remaining)' % (
+				# 					command, username, commands.get_cooldown_remaining(command, channel)), 
+				# 					channel
+				# 			)
+				# 		elif commands.check_has_return(command):
+				# 			pbot('Command is valid and not on cooldown. (%s) (%s)' % (
+				# 				command, username), 
+				# 				channel
+				# 			)
+				# 			commands.update_last_used(command, channel)
 
-							resp = '(%s) > %s' % (username, commands.get_return(command))
-							commands.update_last_used(command, channel)
+				# 			resp = '(%s) > %s' % (username, commands.get_return(command))
+				# 			commands.update_last_used(command, channel)
 
-							pbot(resp, channel)
-							irc.send_message(channel, resp)
+				# 			pbot(resp, channel)
+				# 			irc.send_message(channel, resp)
