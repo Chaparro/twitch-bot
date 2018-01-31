@@ -1,3 +1,4 @@
+twitch-bot-tts
 ==========
 
 This is a simple Twitch chat/irc bot written in python, with added TTS support using Microsoft Speech API 5.3 for playback/broadcasting of Text-To-Speech messages.
@@ -18,7 +19,7 @@ Install and Configure
 When running, the bot will log all text messages to console and speak them using Microsoft Speech Engine.
 
 
-*TODO
+TODO
 ============
 - Implement queue
 - Directory of replaceable usernames/messages, for fun.
